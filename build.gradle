@@ -1,0 +1,45 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+group 'jp.tentus'
+version '1.0'
+
+sourceCompatibility = 17
+targetCompatibility = 17
+
+ext {
+    lombokVersion = '1.18.22'
+    junitVersion = '4.12'
+    slf4jApiVersion = '1.7.32'
+    springFrameworkVersion = '5.3.14'
+    springDataVersion = '2.6.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir = file("${buildDir}/classes/main/")
+        testOutputDir = file("${buildDir}/classes/test/")
+    }
+}
+
+dependencies {
+    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+    compileOnly("org.projectlombok:lombok:${lombokVersion}")
+    implementation("org.slf4j:slf4j-api:${slf4jApiVersion}")
+    implementation("org.springframework:spring-context:${springFrameworkVersion}")
+    implementation("org.springframework:spring-web:${springFrameworkVersion}")
+    implementation("org.springframework.data:spring-data-commons:${springDataVersion}")
+
+    testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+    testImplementation("junit:junit:${junitVersion}")
+}
+
+jar {
+    archiveBaseName = 'spring5'
+}
